@@ -26,9 +26,9 @@ class AuthController extends Controller {
 
         if ($validator->fails()) return response()->json($validator->messages(), 422);
 
-        if ($token = auth()->attempt(['phone' => $request->phone, 'password' => 'Recode200GET'])) {
-            $this->setIP($request);
-
+        if (!$token = auth()->attempt(['phone' => $request->phone, 'password' => 'Recode200GET'])) {
+            return response('', 404);
+        } else {
             $count = Whitelist::where('user_id', auth()->user()->id)->count();
 
             if ($count >= 10) {
@@ -37,13 +37,12 @@ class AuthController extends Controller {
                 $whitelist->delete();
             }
 
+            $this->setIP($request);
             $this->authentication($request, $token);
 
             return response()->json([
                 'access_token' => $token
             ], 200);
-        } else {
-            return response('', 404);
         }
     }
 
@@ -60,9 +59,9 @@ class AuthController extends Controller {
 
         $validator = Validator::make($request->all(), [
             'phone' => ['required', 'unique:users'],
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'surname' => 'required'
+            'fio' => 'required',
+            'data' => 'required',
+            'permission' => 'required'
         ]);
 
         if ($validator->fails()) return response()->json($validator->messages(), 422);
@@ -71,9 +70,9 @@ class AuthController extends Controller {
 
         $user->phone = $request->phone;
         $user->password = Hash::make('Recode200GET');
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->surname = $request->surname;
+        $user->permission = $request->permission;
+        $user->fio = $request->fio;
+        $user->data = $request->data;
         $user->save();
 
         return response('', 201);

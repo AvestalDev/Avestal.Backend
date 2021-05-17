@@ -11,11 +11,30 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
+use Twilio\Rest\Client;
 
 class AuthController extends Controller {
 
     public function username() {
         return 'phone';
+    }
+
+    public function code(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'phone' => 'required'
+        ]);
+
+        if ($validator->fails()) return response()->json($validator->messages(), 422);
+
+        $user = User::where('phone', $request->phone)->first();
+
+        $code = 1111;
+
+        return response()->json([
+            'hash' => hash('sha256', $code),
+            'auth' => !is_null($user),
+        ]);
     }
 
     public function login(Request $request) {

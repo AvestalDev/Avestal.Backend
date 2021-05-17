@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="c2522ff7-2d76-4c5d-8033-5bcfed3a080c" name="api.avestal.ru">
+        <fileTransfer rootFolder="/var/www/api" accessType="SFTP" host="5.188.159.81" port="22" sshConfigId="6e4a2bbe-7a91-4069-bcb4-10c63eab0ceb" sshConfig="root@5.188.159.81:22 password">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" passiveMode="true" shareSSLContext="true" />
+          </advancedOptions>
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>

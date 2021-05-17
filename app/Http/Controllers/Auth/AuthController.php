@@ -6,12 +6,10 @@ use App\Models\AccessIP;
 use App\Models\User;
 use App\Models\Whitelist;
 use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Controllers\Controller;
-use Twilio\Rest\Client;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class AuthController extends Controller {
 
@@ -112,6 +110,10 @@ class AuthController extends Controller {
 
     public function refresh() {
         return $this->respondWithToken(auth()->refresh());
+    }
+
+    public function user() {
+        return response()->json(auth()->user(), 200);
     }
 
     public function logout() {

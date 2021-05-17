@@ -31,8 +31,8 @@ Route::group(['namespace' => 'Auth'], function () {
 
 Route::group(['namespace' => 'Auth', 'middleware' => 'jwt'], function () {
     Route::get('/logout', [AuthController::class, 'logout']);
+    Route::get('/user', [AuthController::class, 'user']);
 });
-
 
 Route::group(['namespace' => 'Admin', 'middleware' => 'jwt'], function () {
 
@@ -41,5 +41,4 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'jwt'], function () {
     Route::get('/order/{id}', [OrderController::class, 'get']);
     Route::put('/order/{id}', [OrderController::class, 'update']);
     Route::delete('/order', [OrderController::class, 'delete']);
-
 });

@@ -19,4 +19,8 @@ class Order extends Model {
         'files' => 'array',
         'items' => 'array'
     ];
+
+    public function responses() {
+        return $this->hasMany('App\Models\Response', 'order_id', 'id');
+    }
 }

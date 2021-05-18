@@ -16,7 +16,7 @@ class User extends Authenticatable implements JWTSubject {
      * @var array
      */
     protected $fillable = [
-        'password'
+        'fio', 'data', 'phone'
     ];
 
     /**
@@ -56,5 +56,9 @@ class User extends Authenticatable implements JWTSubject {
      */
     public function getJWTCustomClaims() {
         return [];
+    }
+
+    public function scopeClient($q) {
+        return $q->where('permission', 1)->orWhere('permission', 3);
     }
 }

@@ -1,12 +1,11 @@
 <?php
 
-//API Панели администратора
+//API
+use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\OrderController;
-
-
-//API Аунтефикации
+use App\Http\Controllers\Admin\ResponseController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthController;
-
 
 //Расширения
 use Illuminate\Support\Facades\Route;
@@ -31,7 +30,6 @@ Route::group(['namespace' => 'Auth'], function () {
 
 Route::group(['namespace' => 'Auth', 'middleware' => 'jwt'], function () {
     Route::get('/logout', [AuthController::class, 'logout']);
-    Route::get('/user', [AuthController::class, 'user']);
 });
 
 Route::group(['namespace' => 'Admin', 'middleware' => 'jwt'], function () {
@@ -40,5 +38,15 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'jwt'], function () {
     Route::get('/orders', [OrderController::class, 'getAll']);
     Route::get('/order/{id}', [OrderController::class, 'get']);
     Route::put('/order/{id}', [OrderController::class, 'update']);
-    Route::delete('/order', [OrderController::class, 'delete']);
+    Route::delete('/order/{id}', [OrderController::class, 'delete']);
+
+    Route::get('/user', [UserController::class, 'get']);
+    Route::get('/clients', [ClientController::class, 'getAll']);
+    Route::get('/client/{id}', [ClientController::class, 'get']);
+    Route::put('/client/{id}', [ClientController::class, 'update']);
+    Route::delete('/client/{id}', [ClientController::class, 'delete']);
+
+    Route::post('/response', [ResponseController::class, 'set']);
+    Route::put('/response/{id}', [ResponseController::class, 'update']);
+    Route::delete('/response/{id}', [ResponseController::class, 'delete']);
 });

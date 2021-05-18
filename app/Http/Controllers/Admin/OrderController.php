@@ -19,7 +19,7 @@ class OrderController extends Controller {
             'geolocation' => ['required', 'array'],
             'images' => ['required', 'array'],
             'files' => ['required', 'array'],
-            'items' => ['required', 'array'],
+            'items' => ['required', 'array']
         ]);
 
         if ($validator->fails()) return response()->json($validator->messages(), 422);
@@ -32,9 +32,9 @@ class OrderController extends Controller {
 
     public function get($id) {
 
-        $order = Order::find($id);
+        $order = Order::with('responses')->find($id);
 
-        if (is_null($id)) return response('', 404);
+        if (is_null($order)) return response('', 404);
 
         return response($order, 200);
     }
@@ -54,6 +54,7 @@ class OrderController extends Controller {
             'images' => ['required', 'array'],
             'files' => ['required', 'array'],
             'items' => ['required', 'array'],
+            'user_id' => ['nullable']
         ]);
 
         if ($validator->fails()) return response()->json($validator->messages(), 422);
@@ -64,6 +65,7 @@ class OrderController extends Controller {
             return response('', 404);
         } else {
             $order->fill($request->all());
+            $order->user_id = $request->user_id;
             $order->save();
         }
 
@@ -74,7 +76,7 @@ class OrderController extends Controller {
 
         $order = Order::find($id);
 
-        if (is_null($id)) {
+        if (is_null($order)) {
             return response('', 404);
         } else {
             $order->delete();

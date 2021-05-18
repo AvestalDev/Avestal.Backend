@@ -112,10 +112,6 @@ class AuthController extends Controller {
         return $this->respondWithToken(auth()->refresh());
     }
 
-    public function user() {
-        return response()->json(auth()->user(), 200);
-    }
-
     public function logout() {
         $whitelist = Whitelist::where('access_token', JWTAuth::getToken())->first();
 

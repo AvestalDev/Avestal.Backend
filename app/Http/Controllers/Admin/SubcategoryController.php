@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use App\Models\Subcategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -57,11 +58,13 @@ class SubcategoryController extends Controller {
 
         $subcategory = Subcategory::find($id);
 
-        if (is_null($subcategory)) {
-            return response('', 404);
-        } else {
-            $subcategory->delete();
-        }
+        if (is_null($subcategory)) return response('', 404);
+
+        $items = Item::where('subcategory_id', $subcategory->id)->count();
+
+        if ($items > 0) return response('', 409);
+
+        $subcategory->delete();
 
         return response('', 200);
     }

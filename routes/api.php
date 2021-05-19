@@ -3,8 +3,10 @@
 //API
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
+use App\Http\Controllers\Admin\ItemController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ResponseController;
+use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthController;
 
@@ -41,6 +43,12 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'jwt'], function () {
     Route::put('/order/{id}', [OrderController::class, 'update']);
     Route::delete('/order/{id}', [OrderController::class, 'delete']);
 
+    Route::post('/item', [ItemController::class, 'set']);
+    Route::get('/items', [ItemController::class, 'getAll']);
+    Route::get('/item/{id}', [ItemController::class, 'get']);
+    Route::put('/item/{id}', [ItemController::class, 'update']);
+    Route::delete('/item/{id}', [ItemController::class, 'delete']);
+
     Route::get('/user', [UserController::class, 'get']);
     Route::get('/clients', [ClientController::class, 'getAll']);
     Route::get('/client/{id}', [ClientController::class, 'get']);
@@ -56,8 +64,8 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'jwt'], function () {
     Route::put('/category/{id}', [CategoryController::class, 'update']);
     Route::delete('/category/{id}', [CategoryController::class, 'delete']);
 
-    Route::post('/subcategory', [OrderController::class, 'set']);
-    Route::get('/subcategories', [OrderController::class, 'getAll']);
-    Route::put('/subcategory/{id}', [OrderController::class, 'update']);
-    Route::delete('/subcategory/{id}', [OrderController::class, 'delete']);
+    Route::post('/subcategory', [SubcategoryController::class, 'set']);
+    Route::get('/subcategories', [SubcategoryController::class, 'getAll']);
+    Route::put('/subcategory/{id}', [SubcategoryController::class, 'update']);
+    Route::delete('/subcategory/{id}', [SubcategoryController::class, 'delete']);
 });

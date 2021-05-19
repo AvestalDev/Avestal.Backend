@@ -1,6 +1,7 @@
 <?php
 
 //API
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ResponseController;
@@ -49,4 +50,14 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'jwt'], function () {
     Route::post('/response', [ResponseController::class, 'set']);
     Route::put('/response/{id}', [ResponseController::class, 'update']);
     Route::delete('/response/{id}', [ResponseController::class, 'delete']);
+
+    Route::post('/category', [CategoryController::class, 'set']);
+    Route::get('/categories', [CategoryController::class, 'getAll']);
+    Route::put('/category/{id}', [CategoryController::class, 'update']);
+    Route::delete('/category/{id}', [CategoryController::class, 'delete']);
+
+    Route::post('/subcategory', [OrderController::class, 'set']);
+    Route::get('/subcategories', [OrderController::class, 'getAll']);
+    Route::put('/subcategory/{id}', [OrderController::class, 'update']);
+    Route::delete('/subcategory/{id}', [OrderController::class, 'delete']);
 });

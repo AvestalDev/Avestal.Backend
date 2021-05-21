@@ -109,7 +109,17 @@ class AuthController extends Controller {
     }
 
     public function refresh() {
-        return $this->respondWithToken(auth()->refresh());
+
+        $whitelist = Whitelist::where('access_token', JWTAuth::getToken())->first();
+
+        $token = JWTAuth::parseToken()->refresh();
+
+        $whitelist->access_token = $token;
+        $whitelist->save();
+
+        return response()->json([
+            'access_token' => $token
+        ], 200);
     }
 
     public function logout() {

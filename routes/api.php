@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthController;
 
 //Расширения
+use App\Http\Controllers\File\FileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,6 +30,10 @@ Route::group(['namespace' => 'Auth'], function () {
     Route::post('/auth', [AuthController::class, 'login']);
     Route::post('/code', [AuthController::class, 'code']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
+});
+
+Route::group(['namespace' => 'File'], function () {
+    Route::post('/image', [FileController::class, 'images']);
 });
 
 Route::group(['namespace' => 'Auth', 'middleware' => 'jwt'], function () {

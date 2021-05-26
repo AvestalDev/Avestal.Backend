@@ -14,7 +14,6 @@ class SubcategoryController extends Controller {
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'image' => 'required',
             'status' => 'required',
             'category_id' => 'required'
         ]);
@@ -35,7 +34,6 @@ class SubcategoryController extends Controller {
 
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'image' => 'required',
             'status' => 'required',
             'category_id' => 'required'
         ]);

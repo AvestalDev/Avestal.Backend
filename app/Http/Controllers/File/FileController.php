@@ -35,14 +35,35 @@ class FileController extends Controller {
 
         $links = [];
 
-        Log::info($request->file('images'));
+        if ($request->hasfile('images')) {
+            foreach($request->file('files') as $file){
+                $path = $file->store('photo', 'public');
+                $links[] = "https://api.avestal.ru/storage/{$path}";
+            }
+        }
 
-//        if ($request->hasfile('images')) {
-//            foreach($request->file('images') as $file){
-//                $path = $file->store('photo', 'public');
-//                $links[] = "https://api.avestal.ru/storage/{$path}";
-//            }
-//        }
+        return response()->json([
+            'links' => $links
+        ], 200);
+    }
+
+    public function files(Request $request) {
+
+        $validator = Validator::make($request->all(), [
+            'files' => 'required',
+            'files.*' => [ 'mimes:pdf,txt,doc,docs,xls']
+        ]);
+
+        if ($validator->fails()) return response()->json($validator->messages(), 422);
+
+        $links = [];
+
+        if ($request->hasfile('files')) {
+            foreach($request->file('files') as $file){
+                $path = $file->store('file', 'public');
+                $links[] = "https://api.avestal.ru/storage/{$path}";
+            }
+        }
 
         return response()->json([
             'links' => $links

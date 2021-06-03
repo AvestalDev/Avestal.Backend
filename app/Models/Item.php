@@ -24,4 +24,17 @@ class Item extends Model {
         'category_id',
         'subcategory_id'
     ];
+
+    public function category() {
+        return $this->hasOne('App\Models\Category', 'id', 'category_id');
+    }
+
+    public function subcategory() {
+        return $this->hasOne('App\Models\Subcategory', 'id', 'subcategory_id');
+    }
+
+    protected $casts = [
+        'specification' => 'array',
+        'images' => 'array'
+    ];
 }

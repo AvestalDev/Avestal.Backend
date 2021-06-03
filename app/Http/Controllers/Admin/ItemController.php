@@ -37,7 +37,7 @@ class ItemController extends Controller {
 
     public function get($id) {
 
-        $item = Item::with('categories', 'subcategories')->find($id);
+        $item = Item::with('category', 'subcategory')->find($id);
 
         if (is_null($item)) return response('', 404);
 
@@ -45,7 +45,7 @@ class ItemController extends Controller {
     }
 
     public function getAll() {
-        return response()->json(Item::with('categories', 'subcategories')->simplePaginate(20));
+        return response()->json(Item::with('category', 'category')->simplePaginate(20));
     }
 
     public function update(Request $request, $id) {

@@ -35,6 +35,7 @@ Route::group(['namespace' => 'Auth'], function () {
 Route::group(['namespace' => 'File'], function () {
     Route::post('/image', [FileController::class, 'image']);
     Route::post('/images', [FileController::class, 'images']);
+    Route::post('/files', [FileController::class, 'files']);
 });
 
 Route::group(['namespace' => 'Auth', 'middleware' => 'jwt'], function () {

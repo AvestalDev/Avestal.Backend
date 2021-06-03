@@ -36,7 +36,7 @@ class FileController extends Controller {
         $links = [];
 
         if ($request->hasfile('images')) {
-            foreach($request->file('files') as $file){
+            foreach($request->file('images') as $file){
                 $path = $file->store('photo', 'public');
                 $links[] = "https://api.avestal.ru/storage/{$path}";
             }

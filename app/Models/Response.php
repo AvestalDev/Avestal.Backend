@@ -9,6 +9,6 @@ class Response extends Model {
     use HasFactory;
 
     protected $fillable = [
-        'order_id', 'comment'
+        'service_id', 'comment'
     ];
 }

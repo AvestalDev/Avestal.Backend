@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Order extends Model {
+class Service extends Model {
 
     use HasFactory;
 
     protected $fillable = [
-        'title', 'text', 'price', 'address', 'geolocation', 'images', 'files', 'items'
+        'title', 'text', 'price', 'address', 'geolocation', 'images', 'files', 'items', 'rating'
     ];
 
     protected $casts = [
@@ -21,6 +21,6 @@ class Order extends Model {
     ];
 
     public function responses() {
-        return $this->hasMany('App\Models\Response', 'order_id', 'id');
+        return $this->hasMany('App\Models\Response', 'service_id', 'id');
     }
 }

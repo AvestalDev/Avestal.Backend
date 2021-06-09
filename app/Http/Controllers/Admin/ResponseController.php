@@ -12,7 +12,7 @@ class ResponseController extends Controller {
     public function set(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'order_id' => 'required',
+            'service_id' => 'required',
             'comment' => 'required'
         ]);
 
@@ -28,7 +28,7 @@ class ResponseController extends Controller {
     public function update(Request $request, $id) {
 
         $validator = Validator::make($request->all(), [
-            'order_id' => 'required',
+            'service_id' => 'required',
             'comment' => 'required'
         ]);
 

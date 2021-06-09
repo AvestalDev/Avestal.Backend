@@ -4,8 +4,8 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ClientController;
 use App\Http\Controllers\Admin\ItemController;
-use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ResponseController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\SubcategoryController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\AuthController;
@@ -44,11 +44,11 @@ Route::group(['namespace' => 'Auth', 'middleware' => 'jwt'], function () {
 
 Route::group(['namespace' => 'Admin', 'middleware' => 'jwt'], function () {
 
-    Route::post('/order', [OrderController::class, 'set']);
-    Route::get('/orders', [OrderController::class, 'getAll']);
-    Route::get('/order/{id}', [OrderController::class, 'get']);
-    Route::put('/order/{id}', [OrderController::class, 'update']);
-    Route::delete('/order/{id}', [OrderController::class, 'delete']);
+    Route::post('/service', [ServiceController::class, 'set']);
+    Route::get('/services', [ServiceController::class, 'getAll']);
+    Route::get('/service/{id}', [ServiceController::class, 'get']);
+    Route::put('/service/{id}', [ServiceController::class, 'update']);
+    Route::delete('/service/{id}', [ServiceController::class, 'delete']);
 
     Route::post('/item', [ItemController::class, 'set']);
     Route::get('/items', [ItemController::class, 'getAll']);

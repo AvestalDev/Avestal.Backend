@@ -77,8 +77,7 @@ class AuthController extends Controller {
         $validator = Validator::make($request->all(), [
             'phone' => ['required', 'unique:users'],
             'fio' => 'required',
-            'data' => 'required',
-            'permission' => 'required'
+            'data' => 'required'
         ]);
 
         if ($validator->fails()) return response()->json($validator->messages(), 422);
@@ -87,9 +86,8 @@ class AuthController extends Controller {
 
         $user->phone = $request->phone;
         $user->password = Hash::make('Recode200GET');
-        $user->permission = $request->permission;
-        $user->fio = $request->fio;
-        $user->data = $request->data;
+        $user->fio = json_decode($request->fio);
+        $user->data = json_decode($request->data);
         $user->save();
 
         return response('', 201);

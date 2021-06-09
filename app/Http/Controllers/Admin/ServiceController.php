@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class OrderController extends Controller {
+class ServiceController extends Controller {
 
     public function set(Request $request) {
 
@@ -19,28 +19,29 @@ class OrderController extends Controller {
             'geolocation' => ['required', 'array'],
             'images' => ['required', 'array'],
             'files' => ['required', 'array'],
-            'items' => ['required', 'array']
+            'items' => ['required', 'array'],
+            'rating' => 'required'
         ]);
 
         if ($validator->fails()) return response()->json($validator->messages(), 422);
 
-        $order = new Order($request->all());
-        $order->save();
+        $service = new Service($request->all());
+        $service->save();
 
         return response('', 201);
     }
 
     public function get($id) {
 
-        $order = Order::with('responses')->find($id);
+        $service = Service::with('responses')->find($id);
 
-        if (is_null($order)) return response('', 404);
+        if (is_null($service)) return response('', 404);
 
-        return response($order, 200);
+        return response($service, 200);
     }
 
     public function getAll() {
-        return response()->json(Order::simplePaginate(20));
+        return response()->json(Service::simplePaginate(20));
     }
 
     public function update(Request $request, $id) {
@@ -59,14 +60,14 @@ class OrderController extends Controller {
 
         if ($validator->fails()) return response()->json($validator->messages(), 422);
 
-        $order = Order::find($id);
+        $service = Service::find($id);
 
-        if (is_null($order)) {
+        if (is_null($service)) {
             return response('', 404);
         } else {
-            $order->fill($request->all());
-            $order->user_id = $request->user_id;
-            $order->save();
+            $service->fill($request->all());
+            $service->user_id = $request->user_id;
+            $service->save();
         }
 
         return response('', 200);
@@ -74,12 +75,12 @@ class OrderController extends Controller {
 
     public function delete($id) {
 
-        $order = Order::find($id);
+        $service = Service::find($id);
 
-        if (is_null($order)) {
+        if (is_null($service)) {
             return response('', 404);
         } else {
-            $order->delete();
+            $service->delete();
         }
 
         return response('', 200);

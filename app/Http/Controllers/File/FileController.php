@@ -12,7 +12,7 @@ class FileController extends Controller {
     public function image(Request $request) {
 
         $validator = Validator::make($request->all(), [
-            'image' => ['required', 'mimes:jpg,jpeg,png,webp']
+            'image' => ['required', 'mimes:jpg,jpeg,png,webp', 'max:500000']
         ]);
 
         if ($validator->fails()) return response()->json($validator->messages(), 422);
@@ -36,7 +36,7 @@ class FileController extends Controller {
         $links = [];
 
         if ($request->hasfile('images')) {
-            foreach($request->file('images') as $file){
+            foreach($request->file('images') as $file) {
                 $path = $file->store('photo', 'public');
                 $links[] = "https://api.avestal.ru/storage/{$path}";
             }
@@ -51,7 +51,7 @@ class FileController extends Controller {
 
         $validator = Validator::make($request->all(), [
             'files' => 'required',
-            'files.*' => [ 'mimes:pdf,txt,doc,docs,xls']
+            'files.*' => [ 'mimes:pdf,txt,doc,docs,xls,docx']
         ]);
 
         if ($validator->fails()) return response()->json($validator->messages(), 422);
@@ -60,7 +60,8 @@ class FileController extends Controller {
 
         if ($request->hasfile('files')) {
             foreach($request->file('files') as $file){
-                $path = $file->store('file', 'public');
+                $filename = $file->getClientOriginalName();
+                $path = $file->storeAs("file", $filename, 'public');
                 $links[] = "https://api.avestal.ru/storage/{$path}";
             }
         }

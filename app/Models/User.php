@@ -5,6 +5,7 @@ namespace App\Models;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use function Webmozart\Assert\Tests\StaticAnalysis\boolean;
 
 class User extends Authenticatable implements JWTSubject {
 
@@ -25,9 +26,7 @@ class User extends Authenticatable implements JWTSubject {
      * @var array
      */
     protected $hidden = [
-        'password',
-        'created_at',
-        'updated_at',
+        'password'
     ];
 
     /**
@@ -37,7 +36,8 @@ class User extends Authenticatable implements JWTSubject {
      */
     protected $casts = [
         'fio' => 'array',
-        'data' => 'array'
+        'data' => 'array',
+        'is_verified' => 'boolean'
     ];
 
     /**

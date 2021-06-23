@@ -17,6 +17,7 @@ class Item extends Model {
         'images',
         'preview_image',
         'status',
+        'status_material',
         'type',
         'unit_type',
         'quantity',

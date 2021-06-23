@@ -62,6 +62,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'jwt'], function () {
     Route::put('/client/{id}', [ClientController::class, 'update']);
     Route::delete('/client/{id}', [ClientController::class, 'delete']);
 
+    Route::get('/responses', [ResponseController::class, 'get']);
     Route::post('/response', [ResponseController::class, 'set']);
     Route::put('/response/{id}', [ResponseController::class, 'update']);
     Route::delete('/response/{id}', [ResponseController::class, 'delete']);

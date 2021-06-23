@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Item;
 use App\Models\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,6 +27,7 @@ class ServiceController extends Controller {
         if ($validator->fails()) return response()->json($validator->messages(), 422);
 
         $service = new Service($request->all());
+        $service->user_id = auth()->user()->id;
         $service->save();
 
         return response('', 201);
@@ -41,7 +43,11 @@ class ServiceController extends Controller {
     }
 
     public function getAll() {
-        return response()->json(Service::simplePaginate(20));
+        $services = Service::with('responses')->simplePaginate(20);
+
+        $services = $this->itemsParse($services);
+
+        return response()->json($services);
     }
 
     public function update(Request $request, $id) {
@@ -84,5 +90,13 @@ class ServiceController extends Controller {
         }
 
         return response('', 200);
+    }
+
+    public function itemsParse($services) {
+        foreach ($services as $service) {
+            $service->items = Item::whereIn('id', $service->items)->get();
+        }
+
+        return $services;
     }
 }
